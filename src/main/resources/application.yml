@@ -1,0 +1,13 @@
+server:
+  port: 9000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/kakaopay-db
+    username: root
+    password: root
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
