@@ -6,8 +6,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3307/kakaopay-db
     username: root
-    password: root
+    password: 1234
   jpa:
+    show-sql: true
+    database: mysql
+    hibernate.ddl-auto: create
     properties:
       hibernate:
         format_sql: true
+
