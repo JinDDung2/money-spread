@@ -4,13 +4,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-public class Money {
+public class Money{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,8 +27,12 @@ public class Money {
     private User owner;
 
     private int budget; // 뿌린 금액
+    private int quantity; // 받을 사람
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user")
-    private List<ReceivedMoneyUser> receivedMoneyUsers = new ArrayList<>();
+    private List<ReceivedMoneyUser> receivedMoneyUsers = new ArrayList<>(); // 받는 사람들
+
+    private int balance; // 잔액
 
 }

@@ -10,7 +10,7 @@ spring:
   jpa:
     show-sql: true
     database: mysql
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: update
     properties:
       hibernate:
         format_sql: true

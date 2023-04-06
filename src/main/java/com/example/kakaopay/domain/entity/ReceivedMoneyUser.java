@@ -24,4 +24,9 @@ public class ReceivedMoneyUser {
 
     private int receivedMoney;
 
+    public void addMoneySprinkling(Money money) {
+        this.money = money;
+        money.getReceivedMoneyUsers().add(this);
+    }
+
 }
