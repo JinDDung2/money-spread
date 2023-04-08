@@ -45,12 +45,6 @@ public class ReceivedMoneyUserService {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new SprinkleRuntimeException(NOT_FOUND_USER, "유저 아이디를 찾을 수 없습니다."));
 
-        log.info("user={}", user.getId());
-        log.info("moneySprinkle={}", moneySprinkle.getId());
-        log.info("moneySprinkle.getBudget={}", moneySprinkle.getBudget());
-        log.info("moneySprinkle.getOwner={}", moneySprinkle.getOwner());
-        log.info("moneySprinkle.getReceivedMoneyUsers()={}", moneySprinkle.getReceivedMoneyUsers());
-
         // 이미 뿌린 유저는 못받게 하기
         if (moneySprinkle.getOwner().getId() == userId) {
             throw new SprinkleRuntimeException(NOT_RECEIVE_MY_SPRINKLE, "자신이 뿌린 유저는 받을 수 없습니다.");
@@ -79,11 +73,6 @@ public class ReceivedMoneyUserService {
                 return ReceivedMoneyUserDto.toDto(receivedMoneyUserRepository.save(receivedMoneyUser));
             }
         }
-
-        /*// 이미 다 받았을 경우
-        if (moneySprinkle == null) {
-            throw new SprinkleRuntimeException(ALREADY_ALL_RECEIVED, "이미 모두 받았습니다.");
-        }*/
 
         return null;
     }

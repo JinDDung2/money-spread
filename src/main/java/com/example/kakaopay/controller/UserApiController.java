@@ -20,7 +20,6 @@ public class UserApiController {
 
     @PostMapping("/user")
     public ResultData<UserDto> createUser(@RequestBody UserDto userDto) {
-        log.info("controller");
         return ResultData.success(userService.createUser(userDto));
     }
 }

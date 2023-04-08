@@ -82,13 +82,6 @@ public class MoneyService {
         money = setMoney(user, room, money);
         setReceivedSprinkleUsers(money);
 
-        /// FIXME: 2023/04/07 확인하면 지우기
-        List<ReceivedMoneyUser> receivedMoneyUsersList = money.getReceivedMoneyUsers();
-        for (ReceivedMoneyUser receivedMoneyUser : receivedMoneyUsersList) {
-            log.info("받아랏!={}", receivedMoneyUser.getUser());
-            log.info("받아랏ID={}", receivedMoneyUser.getMoney().getId());
-        }
-
         return MoneyDto.toDto(moneyRepository.save(money));
     }
 

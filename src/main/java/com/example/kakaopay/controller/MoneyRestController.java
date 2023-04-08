@@ -10,6 +10,7 @@ import com.example.kakaopay.service.RoomService;
 import com.example.kakaopay.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.kakaopay.domain.dto.response.ErrorCode.ALREADY_ALL_RECEIVED;
 import static com.example.kakaopay.domain.dto.response.ErrorCode.NOT_ENOUGH_BALANCE;
 
 @RestController
@@ -52,7 +53,13 @@ public class MoneyRestController {
         if (moneyDto.getBudget() < moneyDto.getQuantity() ) {
             throw new SprinkleRuntimeException(NOT_ENOUGH_BALANCE, "잔액이 부족합니다.");
         }
-        return ResultData.success(receivedMoneyUserService.receiveMoneySprinkle(moneyDto, userId, roomId));
+
+        ReceivedMoneyUserDto receivedMoneyUserDto = receivedMoneyUserService.receiveMoneySprinkle(moneyDto, userId, roomId);
+        // 이미 다 받았을 경우
+        if (receivedMoneyUserDto == null) {
+            throw new SprinkleRuntimeException(ALREADY_ALL_RECEIVED, "이미 모두 받았습니다.");
+        }
+        return ResultData.success(receivedMoneyUserDto);
     }
 
     /**

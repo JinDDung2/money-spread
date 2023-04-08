@@ -19,7 +19,6 @@ public class UserService {
 
     @Transactional
     public UserDto createUser(UserDto userDto) {
-        log.info("service");
         User user = userDto.toEntity();
         userRepository.save(user);
 
