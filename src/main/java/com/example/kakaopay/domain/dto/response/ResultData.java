@@ -18,7 +18,7 @@ public class ResultData<T> {
     }
 
     public static <T> ResultData<ResultError> error(ResultError error) {
-        return new ResultData<>(false, error);
+        return new ResultData<>(false, new ResultError(error.getErrorCode(), error.getMessage()));
     }
 
 }

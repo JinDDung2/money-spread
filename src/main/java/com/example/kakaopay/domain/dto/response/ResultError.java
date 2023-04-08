@@ -4,11 +4,15 @@ import lombok.Getter;
 
 @Getter
 public class ResultError {
+    private ErrorCode errorCode;
     private String message;
-    private final int status;
 
-    public ResultError(String message, int status) {
+    public ResultError(ErrorCode errorCode, String message) {
+        this.errorCode = errorCode;
         this.message = message;
-        this.status = status;
+    }
+
+    public ResultError(String message) {
+        this.message = message;
     }
 }

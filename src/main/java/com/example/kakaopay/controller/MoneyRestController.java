@@ -1,15 +1,16 @@
 package com.example.kakaopay.controller;
 
 import com.example.kakaopay.domain.dto.MoneyDto;
+import com.example.kakaopay.domain.dto.ReceivedMoneyUserDto;
 import com.example.kakaopay.domain.dto.response.ResultData;
+import com.example.kakaopay.domain.dto.response.SprinkleRuntimeException;
 import com.example.kakaopay.service.MoneyService;
 import com.example.kakaopay.service.ReceivedMoneyUserService;
 import com.example.kakaopay.service.RoomService;
 import com.example.kakaopay.service.UserService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import static com.example.kakaopay.domain.dto.response.ErrorCode.NOT_ENOUGH_BALANCE;
 
 @RestController
 public class MoneyRestController {
@@ -33,9 +34,34 @@ public class MoneyRestController {
      * budget
      */
     @PostMapping("/api/money")
-    public ResultData<MoneyDto> createMoney(@RequestHeader("X-USER-ID") Long userId,
+    public ResultData<MoneyDto> createMoneySprinkle(@RequestHeader("X-USER-ID") Long userId,
                                             @RequestHeader("X-ROOM-ID") Long roomId,
                                             @RequestBody MoneyDto moneyDto) {
         return ResultData.success(moneyService.createMoneySprinkle(userId, roomId, moneyDto));
+    }
+
+    /**
+     * 받기
+     * userId
+     * roomId
+     */
+    @PostMapping("/api/money/receive")
+    public ResultData<ReceivedMoneyUserDto> receiveMoneySprinkle(@RequestHeader("X-USER-ID") Long userId,
+                                                                 @RequestHeader("X-ROOM-ID") Long roomId,
+                                                                 @RequestBody MoneyDto moneyDto) {
+        if (moneyDto.getBudget() < moneyDto.getQuantity() ) {
+            throw new SprinkleRuntimeException(NOT_ENOUGH_BALANCE, "잔액이 부족합니다.");
+        }
+        return ResultData.success(receivedMoneyUserService.receiveMoneySprinkle(moneyDto, userId, roomId));
+    }
+
+    /**
+     * 조회
+     * userId
+     */
+    @GetMapping("/api/money/info")
+    public ResultData<MoneyDto> getInfo(@RequestHeader("X-USER-ID") Long userId,
+                                        @RequestParam String token) {
+        return ResultData.success(moneyService.getMoneySprinkle(userId, token));
     }
 }
