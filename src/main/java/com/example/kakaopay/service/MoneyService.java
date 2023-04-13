@@ -106,6 +106,7 @@ public class MoneyService {
 
     }
 
+    // 나누어진 금액을 받는 사람에게 넣기
     private List<ReceivedMoneyUser> divideBudget(Money money) {
         int divideNum = money.getQuantity();
         int budget = money.getBudget();
@@ -122,6 +123,7 @@ public class MoneyService {
         return divide(receivedMoneyUsers, budget);
     }
 
+    // 금액 나누기
     private List<ReceivedMoneyUser> divide(List<ReceivedMoneyUser> receivedMoneyUsers, int budget) {
         if (budget < 2) {
             int index = RandomUtils.getInstance().getRandom(receivedMoneyUsers.size());
@@ -135,5 +137,29 @@ public class MoneyService {
 
         budget -= divideNum;
         return divide(receivedMoneyUsers, budget);
+    }
+
+    private List<ReceivedMoneyUser> divide2(Money money) {
+        int divideNum = money.getQuantity();
+        int budget = money.getBudget();
+
+        List<ReceivedMoneyUser> receivedMoneyUsers = new ArrayList<>();
+
+        for (int i = 0; i < divideNum; i++) {
+            ReceivedMoneyUser receivedMoneyUser = new ReceivedMoneyUser();
+            receivedMoneyUser.addMoneySprinkling(money);
+            receivedMoneyUsers.add(receivedMoneyUser);
+        }
+
+        for (int i = 0; i < receivedMoneyUsers.size()-1; i++) {
+            int divideMoney = RandomUtils.getInstance().getRandom(budget);
+            receivedMoneyUsers.get(i).setReceivedMoney(divideMoney);
+            budget -= divideMoney;
+        }
+
+        // 마지막 한사람 한테는 뿌리기 잔액 전부 주기
+        receivedMoneyUsers.get(receivedMoneyUsers.size()-1).setReceivedMoney(budget);
+
+        return receivedMoneyUsers;
     }
 }
