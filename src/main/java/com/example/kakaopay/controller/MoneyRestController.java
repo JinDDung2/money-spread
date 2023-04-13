@@ -6,8 +6,6 @@ import com.example.kakaopay.domain.dto.response.ResultData;
 import com.example.kakaopay.domain.dto.response.SprinkleRuntimeException;
 import com.example.kakaopay.service.MoneyService;
 import com.example.kakaopay.service.ReceivedMoneyUserService;
-import com.example.kakaopay.service.RoomService;
-import com.example.kakaopay.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import static com.example.kakaopay.domain.dto.response.ErrorCode.ALREADY_ALL_RECEIVED;
@@ -15,15 +13,10 @@ import static com.example.kakaopay.domain.dto.response.ErrorCode.NOT_ENOUGH_BALA
 
 @RestController
 public class MoneyRestController {
-    private final UserService userService;
-    private final RoomService roomService;
     private final MoneyService moneyService;
     private final ReceivedMoneyUserService receivedMoneyUserService;
 
-    public MoneyRestController(UserService userService, RoomService roomService, MoneyService moneyService,
-                               ReceivedMoneyUserService receivedMoneyUserService) {
-        this.userService = userService;
-        this.roomService = roomService;
+    public MoneyRestController(MoneyService moneyService, ReceivedMoneyUserService receivedMoneyUserService) {
         this.moneyService = moneyService;
         this.receivedMoneyUserService = receivedMoneyUserService;
     }
