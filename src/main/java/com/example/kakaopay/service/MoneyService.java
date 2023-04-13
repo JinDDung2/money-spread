@@ -125,18 +125,16 @@ public class MoneyService {
 
     // 금액 나누기
     private List<ReceivedMoneyUser> divide(List<ReceivedMoneyUser> receivedMoneyUsers, int budget) {
-        if (budget < 2) {
-            int index = RandomUtils.getInstance().getRandom(receivedMoneyUsers.size());
-            receivedMoneyUsers.get(index).setReceivedMoney(receivedMoneyUsers.get(index).getReceivedMoney() + budget);
-            return receivedMoneyUsers;
+        for (int i = 0; i < receivedMoneyUsers.size()-1; i++) {
+            int divideMoney = RandomUtils.getInstance().getRandom(budget);
+            receivedMoneyUsers.get(i).setReceivedMoney(divideMoney);
+            budget -= divideMoney;
         }
-        int divideNum = RandomUtils.getInstance().getRandom(budget);
-        int index = RandomUtils.getInstance().getRandom(receivedMoneyUsers.size());
 
-        receivedMoneyUsers.get(index).setReceivedMoney(receivedMoneyUsers.get(index).getReceivedMoney() + divideNum);
+        // 마지막 한사람 한테는 뿌리기 잔액 전부 주기
+        receivedMoneyUsers.get(receivedMoneyUsers.size()-1).setReceivedMoney(budget);
 
-        budget -= divideNum;
-        return divide(receivedMoneyUsers, budget);
+        return receivedMoneyUsers;
     }
 
     private List<ReceivedMoneyUser> divide2(Money money) {
