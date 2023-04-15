@@ -50,6 +50,7 @@ public class MoneyService {
         return MoneyDto.toDto(moneySprinkle);
     }
 
+    // FIXME: 2023/04/15 언제 뿌리기를 종료해야하는지 궁금
     @Transactional
     public void closeMoneySprinkle(Money money) {
         if (money.getBalance() != 0) {
@@ -85,7 +86,7 @@ public class MoneyService {
         return MoneyDto.toDto(moneyRepository.save(money));
     }
 
-    public Money setMoney(User user, Room room, Money money) {
+    private Money setMoney(User user, Room room, Money money) {
         money.setToken(RandomUtils.getInstance().generateToken());
         money.setBalance(money.getBalance());
         money.setOwner(user);
@@ -94,7 +95,7 @@ public class MoneyService {
         return moneyRepository.save(money);
     }
 
-    public void setOwnerBudget(User user, Money money) {
+    private void setOwnerBudget(User user, Money money) {
         user.setBudget(user.getBudget() - money.getBudget());
         userRepository.save(user);
     }
@@ -137,6 +138,7 @@ public class MoneyService {
         return receivedMoneyUsers;
     }
 
+    // FIXME: 2023/04/15 처음에 이렇게 했었는데 위에 (divide, divideBudget)으로 나누는게 좋은지??
     private List<ReceivedMoneyUser> divide2(Money money) {
         int divideNum = money.getQuantity();
         int budget = money.getBudget();
