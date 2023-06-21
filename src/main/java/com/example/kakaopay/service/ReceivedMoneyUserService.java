@@ -83,7 +83,7 @@ public class ReceivedMoneyUserService {
                 .filter(money -> money.getUser().getId() == userId)
                 .collect(Collectors.toList());
 
-        if (receivedMoneyUserList.size() == 0) return false;
+        if (receivedMoneyUserList.isEmpty()) return false;
         return true;
     }
 }
