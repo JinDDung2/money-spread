@@ -22,7 +22,6 @@
   * 자산
 ---
 # API End-point
-주의사항 -> 서버 포트 9000
 ## 사용자 등록
 ### [Post] http://localhost:9000/api/user
 requestBody
