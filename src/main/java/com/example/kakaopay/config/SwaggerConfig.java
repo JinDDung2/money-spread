@@ -26,7 +26,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("kakao API")
-                .description("Swagger를 이용한 카카오페이 뿌리기 API 명세")
+                .description("카카오페이 뿌리기 API 명세")
                 .version("1.0.0")
                 .build();
     }
